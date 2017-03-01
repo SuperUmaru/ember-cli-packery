@@ -1,4 +1,6 @@
 {
   "name": "ember-cli-packery",
-  "dependencies": {}
+  "dependencies": {
+    "packery": "^2.1.1"
+  }
 }

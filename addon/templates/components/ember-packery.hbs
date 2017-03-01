@@ -1,0 +1,12 @@
+<div class="grid">
+	{{#each items as |item|}}
+		{{#if hasBlock}}
+			{{{yield item}}}
+		{{else}}
+			<div class="grid-item">
+				{{{item}}}
+			</div>
+		{{/if}}
+	{{/each}}
+</div>
+{{yield}}
