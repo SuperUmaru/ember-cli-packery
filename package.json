@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-packery",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
@@ -8,10 +8,12 @@
   "license": "MIT",
   "author": "SuperUmaru",
   "directories": {
-    "doc": "doc",
     "test": "tests"
   },
-  "repository": "https://github.com/SuperUmaru/ember-cli-packery",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuperUmaru/ember-cli-packery.git"
+  },
   "scripts": {
     "build": "ember build",
     "start": "ember server",
@@ -51,5 +53,10 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/SuperUmaru/ember-cli-packery/issues"
+  },
+  "homepage": "https://github.com/SuperUmaru/ember-cli-packery#readme",
+  "main": "index.js"
 }
