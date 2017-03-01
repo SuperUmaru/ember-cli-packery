@@ -7,5 +7,6 @@ module.exports = {
     this._super.included.apply(this, arguments);
 
     app.import(app.bowerDirectory + '/packery/dist/packery.pkgd.js');
+    app.import(app.bowerDirectory + '/draggabilly/dist/draggabilly.pkgd.js');
   }
 };

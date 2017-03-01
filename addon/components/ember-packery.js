@@ -42,6 +42,7 @@ export default Ember.Component.extend({
 		packery.on('dragItemPositioned', this.dragItemPositioned);
 		packery.on('fitComplete', this.fitComplete);
 		packery.on('removeComplete', this.removeComplete);
+		
 	},
 
 	layoutComplete() {
