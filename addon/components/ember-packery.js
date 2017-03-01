@@ -42,7 +42,13 @@ export default Ember.Component.extend({
 		packery.on('dragItemPositioned', this.dragItemPositioned);
 		packery.on('fitComplete', this.fitComplete);
 		packery.on('removeComplete', this.removeComplete);
-		
+
+		packery.find('.grid-item').each( function( i, gridItem ) {
+			/* global Draggabilly */
+			var draggie = new Draggabilly( gridItem );
+			// bind drag events to Packery
+			packery.packery( 'bindDraggabillyEvents', draggie );
+		});
 	},
 
 	layoutComplete() {
