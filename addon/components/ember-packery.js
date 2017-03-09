@@ -65,6 +65,13 @@ export default Ember.Component.extend({
 	},
 
 	_reloadItems: observer('items.[]', function () {
-		this.$().packery('reloadItems');
+		const packery = this.$().packery('reloadItems');
+
+		packery.find('.grid-item').each( function( i, gridItem ) {
+			/* global Draggabilly */
+			var draggie = new Draggabilly( gridItem );
+			// bind drag events to Packery
+			packery.packery( 'bindDraggabillyEvents', draggie );
+		});
 	})
 });
