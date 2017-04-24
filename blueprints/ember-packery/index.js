@@ -1,12 +1,24 @@
 /*jshint node:true*/
 module.exports = {
-  normalizeEntityName: function() {
-    // this prevents an error when the entityName is
-    // not specified (since that doesn't actually matter
-    // to us
-  },
+  description: ''
 
-  afterInstall: function(options) {
-    return this.addBowerPackageToProject('packery');
+  // locals: function(options) {
+  //   // Return custom template variables here.
+  //   return {
+  //     foo: options.entity.options.foo
+  //   };
+  // }
+
+  // afterInstall: function(options) {
+  //   // Perform extra work here.
+  // }
+
+  normalizeEntityName: function() {}, // no-op since we're just adding dependencies
+
+  afterInstall: function() {
+    return this.addBowerPackageToProject('packery', '~2.1.1').then(() => {
+      this.addBowerPackageToProject('draggabilly', '~2.1.1');
+    });
   }
 };
+

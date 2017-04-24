@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/ember-packery';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 
-const {get, observer} = Ember;
+const {get, set, observer, $} = Ember;
 
 export default Ember.Component.extend({
 	layout,
@@ -20,9 +20,11 @@ export default Ember.Component.extend({
 	transitionDuration: fallbackIfUndefined('0.4s'),
 	resize: fallbackIfUndefined(true),
 	initLayout: fallbackIfUndefined(true),
+	columns: fallbackIfUndefined(3),
+	packeryOptions: {},
 
 	didInsertElement() {
-		const packery = this.$().packery({
+		set(this, 'packeryOptions', {
 			itemSelector: get(this, 'itemSelector'),
 			columnWidth: get(this, 'columnWidth'),
 			rowHeight: get(this, 'rowHeight'),
@@ -37,11 +39,15 @@ export default Ember.Component.extend({
 			resize: get(this, 'resize'),
 			initLayout: get(this, 'initLayout')
 		});
+		const packery = this.$().packery(get(this, 'packeryOptions'));
+		set(this, 'packeryElement', packery);
 
 		packery.on('layoutComplete', this.layoutComplete);
 		packery.on('dragItemPositioned', this.dragItemPositioned);
 		packery.on('fitComplete', this.fitComplete);
 		packery.on('removeComplete', this.removeComplete);
+
+		packery.packery('layout');
 
 		packery.find('.grid-item').each( function( i, gridItem ) {
 			/* global Draggabilly */
@@ -50,7 +56,6 @@ export default Ember.Component.extend({
 			packery.packery( 'bindDraggabillyEvents', draggie );
 		});
 	},
-
 	layoutComplete() {
 	},
 	dragItemPositioned() {
@@ -65,13 +70,17 @@ export default Ember.Component.extend({
 	},
 
 	_reloadItems: observer('items.[]', function () {
-		const packery = this.$().packery('reloadItems');
+		Ember.run.next(() => {
+			const packery = get(this, 'packeryElement');
+			packery.packery('reloadItems');
+			packery.packery('layout');
 
-		packery.find('.grid-item').each( function( i, gridItem ) {
-			/* global Draggabilly */
-			var draggie = new Draggabilly( gridItem );
-			// bind drag events to Packery
-			packery.packery( 'bindDraggabillyEvents', draggie );
+			packery.find('.grid-item').each( function( i, gridItem ) {
+				/* global Draggabilly */
+				var draggie = new Draggabilly( gridItem );
+				// bind drag events to Packery
+				packery.packery( 'bindDraggabillyEvents', draggie );
+			});
 		});
-	})
+	}),
 });
